@@ -1,0 +1,33 @@
+{
+  "name": "jdf-extract-template",
+  "version": "1.0.0",
+  "description": "extract template to js",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdf2e/jdf-extract-template.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jdf2e/jdf-extract-template/issues"
+  },
+  "homepage": "https://github.com/jdf2e/jdf-extract-template#readme",
+  "dependencies": {
+    "acorn": "^5.1.1",
+    "babel-runtime": "^6.25.0",
+    "cheerio": "^1.0.0-rc.2",
+    "escodegen": "^1.8.1",
+    "jdf-log": "0.0.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1"
+  }
+}

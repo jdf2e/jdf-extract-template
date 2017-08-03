@@ -46,10 +46,24 @@ exports.default = function () {
             VariableDeclaration: replaceTemplate(templates, $)
         });
 
-        // 干掉所有页面中的template
+        // 干掉模板里的template(输出为楼层模板)，增加template到js文件
         templates.remove();
-
+        vmVfile.targetContent = $.html();
         jsVfile.targetContent = escodegen.generate(ast);
+    });
+
+    // 干掉所有页面中的template
+    var htmlDir = _path2.default.resolve(VFS.originDir, jdf.config.htmlDir);
+
+    var htmls = _fs2.default.readdirSync(htmlDir);
+    htmls.forEach(function (htmlname) {
+        if (_path2.default.extname(htmlname) === '.html') {
+            var fullpath = _path2.default.resolve(htmlDir, htmlname);
+            var htmlVfile = VFS.queryFile(fullpath);
+            var $ = _cheerio2.default.load(htmlVfile.targetContent);
+            $('script[' + _config2.default.prefix + ']').remove();
+            htmlVfile.targetContent = $.html();
+        }
     });
 };
 

@@ -54,10 +54,24 @@ export default function () {
             VariableDeclaration: replaceTemplate(templates, $),
         });
 
-        // 干掉所有页面中的template
+        // 干掉模板里的template(输出为楼层模板)，增加template到js文件
         templates.remove()
-
+        vmVfile.targetContent = $.html()
         jsVfile.targetContent = escodegen.generate(ast)
+    })
+
+    // 干掉所有页面中的template
+    let htmlDir = path.resolve(VFS.originDir, jdf.config.htmlDir)
+
+    let htmls = fs.readdirSync(htmlDir);
+    htmls.forEach(htmlname => {
+        if (path.extname(htmlname) === '.html') {
+            let fullpath = path.resolve(htmlDir, htmlname)
+            let htmlVfile = VFS.queryFile(fullpath)
+            let $ = cheerio.load(htmlVfile.targetContent)
+            $(`script[${config.prefix}]`).remove()
+            htmlVfile.targetContent = $.html()
+        }
     })
 }
 

@@ -98,10 +98,10 @@ var escodegen = require('escodegen');
 
 function replaceTemplate(templates, $) {
     return function (node) {
-        var reg = new RegExp('\\[' + _config2.default.prefix + '.*?\\]');
-
+        // 匹配 $(***).html() 
+        // template 由prefix获取，最后$(***).html() 对比也是对比prefix属性是否一致
         var rightExpression = node.declarations[0].init;
-        if (rightExpression && rightExpression.type === 'CallExpression' && rightExpression.arguments.length === 0 && rightExpression.callee.property && rightExpression.callee.property.name === 'html' && rightExpression.callee.object && rightExpression.callee.object.callee && (rightExpression.callee.object.callee.name === '$' || rightExpression.callee.object.callee.name === 'jQuery') && rightExpression.callee.object.arguments[0] && reg.test(rightExpression.callee.object.arguments[0].value || '')) {
+        if (rightExpression && rightExpression.type === 'CallExpression' && rightExpression.arguments.length === 0 && rightExpression.callee.property && rightExpression.callee.property.name === 'html' && rightExpression.callee.object && rightExpression.callee.object.callee && (rightExpression.callee.object.callee.name === '$' || rightExpression.callee.object.callee.name === 'jQuery') && rightExpression.callee.object.arguments[0]) {
             templates.each(function (index, item) {
                 if ($(rightExpression.callee.object.arguments[0].value).attr(_config2.default.prefix) === $(item).attr(_config2.default.prefix)) {
                     node.declarations[0].init = {

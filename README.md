@@ -2,13 +2,30 @@
 将html中的前端模板抽取到js中
 
 ## 注意点
-模板命名用`ext-id`
+模板命名默认用`ext-id`，可以在`config.json`中设置`prefix`属性
 
-在js中，目前只支持jQuery调用，如`var tpl = $([ext-id=floorTpl]).html()`
+`prefix`指的是模板script标签的一个属性
+```
+{
+    "name": "jdf-extract-template",
+    "prefix": "channel-id"
+}
+```
 
+在js中，目前只支持jQuery调用，形如：`var tpl = $(selector).html()`
+
+`selector`不能是变量!~~
+
+```js
+$('#id').html()
+$('.class').html()
+$('[]').html()
+$(selector).html()
+```
+## 示例
 ```html
 <div id="renderPlace">
-    <script type="text/template" ext-id="floorTpl">
+    <script type="text/template" ext-id="12" id="floorTpl">
         <span>我是模板:${floor_id}</span>
     </script>
 </div>
@@ -16,7 +33,7 @@
 ```js
 define(function () {
     require('module1');
-    var tpl = $([ext-id=floorTpl]).html();
+    var tpl = $("#floorTpl").html();
     var data = {
         floor_id: 1
     }

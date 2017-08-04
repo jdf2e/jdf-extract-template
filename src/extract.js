@@ -77,8 +77,8 @@ export default function () {
 
 function replaceTemplate(templates, $) {
     return function (node) {
-        let reg = new RegExp('\\[' + config.prefix + '.*?\\]')
-
+        // 匹配 $(***).html() 
+        // template 由prefix获取，最后$(***).html() 对比也是对比prefix属性是否一致
         let rightExpression = node.declarations[0].init
         if (rightExpression &&
             rightExpression.type === 'CallExpression' &&
@@ -88,8 +88,7 @@ function replaceTemplate(templates, $) {
             rightExpression.callee.object &&
             rightExpression.callee.object.callee &&
             (rightExpression.callee.object.callee.name === '$' || rightExpression.callee.object.callee.name === 'jQuery') &&
-            rightExpression.callee.object.arguments[0] &&
-            reg.test(rightExpression.callee.object.arguments[0].value || '')
+            rightExpression.callee.object.arguments[0]
         ) {
             templates.each((index, item) => {
                 if ($(rightExpression.callee.object.arguments[0].value).attr(config.prefix) === $(item).attr(config.prefix)) {

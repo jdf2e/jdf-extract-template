@@ -19,6 +19,10 @@ var Plugin = exports.Plugin = function Plugin() {
     return {
         setConfig: function setConfig(option) {
             Object.assign(_config2.default, option || {});
+
+            if (_config2.default.pluginConfig) {
+                _config2.default.prefix = _config2.default.pluginConfig.prefix || _config2.default.prefix;
+            }
         },
 
         beforeBuild: function beforeBuild() {},

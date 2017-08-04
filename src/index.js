@@ -5,6 +5,10 @@ export const Plugin = function () {
     return {
         setConfig: function (option) {
             Object.assign(config, option || {})
+            
+            if (config.pluginConfig) {
+                config.prefix = config.pluginConfig.prefix || config.prefix
+            }
         },
 
         beforeBuild: function () {
@@ -22,5 +26,4 @@ export const Plugin = function () {
             return tpl
         }
     }
-    
 }

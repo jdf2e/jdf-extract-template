@@ -2,7 +2,7 @@
 将html中的前端模板抽取到js中
 
 ## 注意点
-模板命名默认用`ext-id`，可以在`config.json`中设置`prefix`属性
+默认抽取带有`ext-id`属性的script标签，可以在`config.json`中设置`prefix`属性来改变它。
 
 `prefix`指的是模板script标签的一个属性
 ```

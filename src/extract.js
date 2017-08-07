@@ -41,7 +41,8 @@ export default function () {
             }
         })
         // TODO jsAST 挪动
-        let $ = cheerio.load(vmcontent)
+        let $ = cheerio.load(`<div id="cheerioWrap"></div>`);
+        $('#cheerioWrap').append(vmcontent)
         let templates = $(`script[${config.prefix}]`)
         if (templates.length === 0) {
             return
@@ -56,7 +57,7 @@ export default function () {
 
         // 干掉模板里的template(输出为楼层模板)，增加template到js文件
         templates.remove()
-        vmVfile.targetContent = $.html()
+        vmVfile.targetContent = $('#cheerioWrap').html();
         jsVfile.targetContent = escodegen.generate(ast)
     })
 

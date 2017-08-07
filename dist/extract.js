@@ -33,7 +33,8 @@ exports.default = function () {
             }
         });
         // TODO jsAST 挪动
-        var $ = _cheerio2.default.load(vmcontent);
+        var $ = _cheerio2.default.load('<div id="cheerioWrap"></div>');
+        $('#cheerioWrap').append(vmcontent);
         var templates = $('script[' + _config2.default.prefix + ']');
         if (templates.length === 0) {
             return;
@@ -48,7 +49,7 @@ exports.default = function () {
 
         // 干掉模板里的template(输出为楼层模板)，增加template到js文件
         templates.remove();
-        vmVfile.targetContent = $.html();
+        vmVfile.targetContent = $('#cheerioWrap').html();
         jsVfile.targetContent = escodegen.generate(ast);
     });
 
